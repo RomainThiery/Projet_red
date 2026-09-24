@@ -1,38 +1,36 @@
 package menu
 
 import (
-	"Projet-Red/blacksmith"
-	"Projet-Red/equipment"
-	"Projet-Red/fight"
-	"Projet-Red/merchant"
-	"Projet-Red/wallet"
 	"fmt"
-	"os"
+	"projet-red/personnage"
 )
 
-func StartMainMenu(w *wallet.Wallet, c *equipment.Character) {
+func Start(p *personnage.Personnage) {
 	for {
-		fmt.Println("\n=== 🏰 MENU PRINCIPAL 🏰 ===")
-		fmt.Println("1. Forgerie  2. Marchand  3. Inventaire  4. Aventure  5. Quitter")
-		fmt.Print("Choix : ")
 
-		var choice int
-		fmt.Scanln(&choice)
+		fmt.Println("=== MENU ===")
+		fmt.Println("1 - Information du personnage")
+		fmt.Println("2 - Inventaire")
+		fmt.Println("3 - Marchand")
+		fmt.Println("4 - Quitter")
 
-		switch choice {
+		var choix int
+		fmt.Print("votre choix : ")
+		fmt.Scan(&choix)
+
+		switch choix {
 		case 1:
-			blacksmith.OpenBlacksmithMenu(w, c)
+		 	personnage.DisplayInfo(p)
 		case 2:
-			merchant.OpenMerchantMenu(w, c)
+			personnage.AccessInventory(p)
 		case 3:
-			c.OpenEquipmentMenu()
+			personnage.Merchant(p)
 		case 4:
-			fight.TrainingFight(c, w)
-		case 5:
-			fmt.Println("\n👋 Fermeture du jeu... À bientôt, aventurier !")
-			os.Exit(0)
+			fmt.Println("Au revoir !")
+			return
+		
 		default:
-			fmt.Println("Choix invalide.")
+			fmt.Println("Choix invalide")
 		}
 	}
 }
