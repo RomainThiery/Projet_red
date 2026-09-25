@@ -191,6 +191,18 @@ func TrainingFight(c *character.Character, w *wallet.Wallet) {
 			fmt.Printf("\n🎉 Victoire ! Tu as vaincu %s !\n", g.Name)
 			w.AddGold(reward)
 			fmt.Printf("Tu as récupéré %d pièces d'or !\n", reward)
+			if c.Niveau == 3 {
+				fmt.Println("\n==========================================================================")
+				fmt.Println("🏆 QUÊTE ULTIME ACCOMPLIE !")
+				fmt.Println("==========================================================================")
+				fmt.Printf("Le souffle brûlant d'Ignis s'éteint enfin. %s, tu viens d'accomplir\n", c.Name)
+				fmt.Println("l'exploit suprême : le Dragon Ancien est terrassé !")
+				fmt.Println("Le royaume d'Eldoria est sauvé de la destruction grâce à ton courage.")
+				fmt.Println("Les bardes chanteront tes hauts faits pour les mille ans à venir.")
+				fmt.Println("\n✨ FÉLICITATIONS, TU AS TERMINÉ LE JEU ! ✨")
+				fmt.Println("==========================================================================")
+				return
+			}
 			c.CurrentHP = c.MaxHP
 			c.CurrentMana = c.MaxMana
 			fmt.Printf("💖 Tes PV et ton Mana ont été entièrement restaurés (%d/%d PV) !\n", c.CurrentHP, c.MaxHP)
@@ -200,6 +212,11 @@ func TrainingFight(c *character.Character, w *wallet.Wallet) {
 
 		fmt.Println("\n--- Tour du monstre ---")
 		GoblinPattern(&g, c, turn)
+
+		if c.CurrentHP <= 0 {
+			Dead(c)
+			break
+		}
 
 		turn++
 	}
