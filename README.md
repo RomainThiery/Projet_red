@@ -80,3 +80,5 @@ Les licence et version utiliser sont :
 - Licence : Projet académique open-source. Libre d'utilisation et de modification pour apprentissage.
 
 Projet Red est un projet de jeu de rôle textuel complet créé en Go. Son code est découpé en plusieurs dossiers bien organisés (character, fight, merchant, wallet) pour rendre le projet facile à lire et à faire évoluer. Merci d'avoir joué et sauvé Eldoria !
+
+Sur ce lien ci-dessous on retrouve notre planing Trello : Partie : 1 ![alt text](image-4.png)                                                      Partie : 2 ![alt text](image-5.png)
