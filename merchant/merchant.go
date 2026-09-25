@@ -1,7 +1,7 @@
 package merchant
 
 import (
-	"Projet-Red/equipment"
+	"Projet-Red/character"
 	"Projet-Red/wallet"
 	"fmt"
 )
@@ -11,7 +11,7 @@ type Item struct {
 	Price int
 }
 
-func OpenMerchantMenu(w *wallet.Wallet, c *equipment.Character) {
+func OpenMerchantMenu(w *wallet.Wallet, c *character.Character) {
 	items := []Item{
 		{Name: "Potion de vie", Price: 3},
 		{Name: "Potion de mana", Price: 3},
