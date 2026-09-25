@@ -9,11 +9,13 @@ func Init() Character {
 	fmt.Scanln(&nom)
 
 	p := Character{
-		Name:      "Harmony",
-		Classe:    "Elfe",
-		Niveau:    1,
-		MaxHP:     100,
-		CurrentHP: 40,
+		Name:        "Harmony",
+		Classe:      "Elfe",
+		Niveau:      1,
+		MaxHP:       100,
+		CurrentHP:   40,
+		CurrentMana: 100,
+		MaxMana:     100,
 		Inventory: []string{
 			"potion de vie",
 			"potion de vie",
