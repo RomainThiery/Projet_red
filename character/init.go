@@ -9,11 +9,11 @@ func Init() Character {
 	fmt.Scanln(&nom)
 
 	p := Character{
-		Name:        "Harmony",
+		Name:        nom,
 		Classe:      "Elfe",
 		Niveau:      1,
 		MaxHP:       100,
-		CurrentHP:   40,
+		CurrentHP:   100,
 		CurrentMana: 100,
 		MaxMana:     100,
 		Inventory: []string{
