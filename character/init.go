@@ -5,8 +5,8 @@ import "fmt"
 func Init() Character {
 	var nom string
 
-	fmt.Print("Entrez le nom de votre personnage")
-	fmt.Scan(&nom)
+	fmt.Print("Entrez votre pseudo : ")
+	fmt.Scanln(&nom)
 
 	p := Character{
 		Name:      "Harmony",
