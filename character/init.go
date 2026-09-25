@@ -1,20 +1,20 @@
-package personnage
+package character
 
 import "fmt"
 
-func Init() Personnage {
+func Init() Character {
 	var nom string
 
 	fmt.Print("Entrez le nom de votre personnage")
 	fmt.Scan(&nom)
 
-	p := Personnage{
-		Nom:      "Harmony",
-		Classe:   "Elfe",
-		Niveau:   1,
-		PvMax:    100,
-		PvActuel: 40,
-		Inventaire: []string{
+	p := Character{
+		Name:      "Harmony",
+		Classe:    "Elfe",
+		Niveau:    1,
+		MaxHP:     100,
+		CurrentHP: 40,
+		Inventory: []string{
 			"potion de vie",
 			"potion de vie",
 			"potion de vie",

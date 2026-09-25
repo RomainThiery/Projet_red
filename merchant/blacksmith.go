@@ -1,7 +1,7 @@
-package blacksmith
+package merchant
 
 import (
-	"Projet-Red/equipment"
+	"Projet-Red/character"
 	"Projet-Red/wallet"
 	"fmt"
 )
@@ -41,7 +41,7 @@ func removeMaterials(inventory []string, required map[string]int) []string {
 	}
 	return newInventory
 }
-func OpenBlacksmithMenu(w *wallet.Wallet, c *equipment.Character) {
+func OpenBlacksmithMenu(w *wallet.Wallet, c *character.Character) {
 	// Définition des recettes avec les matériaux requis
 	recipes := map[int]Recipe{
 		1: {

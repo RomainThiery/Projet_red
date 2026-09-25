@@ -1,7 +1,7 @@
 package fight
 
 import (
-	"Projet-Red/equipment"
+	"Projet-Red/character"
 	"Projet-Red/monster"
 	"Projet-Red/wallet"
 	"fmt"
@@ -16,7 +16,7 @@ func hasItem(inventory []string, itemName string) bool {
 	return false
 }
 
-func GoblinPattern(g *monster.Monster, c *equipment.Character, turn int) {
+func GoblinPattern(g *monster.Monster, c *character.Character, turn int) {
 	damage := g.Attack
 	if turn%3 == 0 {
 		damage = g.Attack * 2
@@ -30,7 +30,7 @@ func GoblinPattern(g *monster.Monster, c *equipment.Character, turn int) {
 	fmt.Printf("PV de %s : %d / %d\n", c.Name, c.CurrentHP, c.MaxHP)
 }
 
-func CharTurn(c *equipment.Character, g *monster.Monster) {
+func CharTurn(c *character.Character, g *monster.Monster) {
 	for {
 		fmt.Printf("\n--- TOUR DE %s (PV: %d/%d | Mana: %d/%d) ---\n", c.Name, c.CurrentHP, c.MaxHP, c.CurrentMana, c.MaxMana)
 		fmt.Println("1. Attaquer")
@@ -134,26 +134,21 @@ func CharTurn(c *equipment.Character, g *monster.Monster) {
 			if itemChoice > 0 && itemChoice <= len(c.Inventory) {
 				selectedItem := c.Inventory[itemChoice-1]
 
-				if selectedItem == "Potion de vie" {
-					c.CurrentHP += 50
-					if c.CurrentHP > c.MaxHP {
-						c.CurrentHP = c.MaxHP
+				if selectedItem == "Potion de poison" || selectedItem == "potion de poison" {
+					poisonDamage := 10
+					g.CurrentHP -= poisonDamage
+					if g.CurrentHP < 0 {
+						g.CurrentHP = 0
 					}
-					c.Inventory = append(c.Inventory[:itemChoice-1], c.Inventory[itemChoice:]...)
-					fmt.Printf("\nVous utilisez %s. PV : %d / %d\n", selectedItem, c.CurrentHP, c.MaxHP)
-					break
 
-				} else if selectedItem == "Potion de mana" {
-					c.CurrentMana += 25
-					if c.CurrentMana > c.MaxMana {
-						c.CurrentMana = c.MaxMana
-					}
-					c.Inventory = append(c.Inventory[:itemChoice-1], c.Inventory[itemChoice:]...)
-					fmt.Printf("\n🧪 Vous utilisez %s. Mana : %d / %d\n", selectedItem, c.CurrentMana, c.MaxMana)
+					c.RemoveFromInventory(selectedItem)
+					fmt.Printf("\n🧪 Tu lances une Potion de poison sur %s et lui infliges %d dégâts !\n", g.Name, poisonDamage)
+					fmt.Printf("PV de %s : %d / %d\n", g.Name, g.CurrentHP, g.MaxHP)
 					break
 
 				} else {
-					fmt.Printf("Impossible d'utiliser %s en combat !\n", selectedItem)
+					c.UseItem(selectedItem)
+					break
 				}
 			} else {
 				fmt.Println("Choix invalide.")
@@ -164,15 +159,12 @@ func CharTurn(c *equipment.Character, g *monster.Monster) {
 	}
 }
 
-func TrainingFight(c *equipment.Character, w *wallet.Wallet) {
-	if c.CurrentHP <= 0 {
-		c.CurrentHP = c.MaxHP / 2
-		fmt.Printf("\n🩹 Tu te relèves péniblement... PV restaurés à 50%% (%d/%d PV) !\n", c.CurrentHP, c.MaxHP)
-	}
+func TrainingFight(c *character.Character, w *wallet.Wallet) {
+
 	var g monster.Monster
 	reward := 0
 
-	switch c.Stage {
+	switch c.Niveau {
 	case 1:
 		g = monster.InitGoblin()
 		reward = 20
@@ -182,6 +174,9 @@ func TrainingFight(c *equipment.Character, w *wallet.Wallet) {
 	case 3:
 		g = monster.InitDragon()
 		reward = 100
+	default:
+		g = monster.InitGoblin()
+		reward = 20
 	}
 	turn := 1
 
@@ -199,17 +194,12 @@ func TrainingFight(c *equipment.Character, w *wallet.Wallet) {
 			c.CurrentHP = c.MaxHP
 			c.CurrentMana = c.MaxMana
 			fmt.Printf("💖 Tes PV et ton Mana ont été entièrement restaurés (%d/%d PV) !\n", c.CurrentHP, c.MaxHP)
-			c.Stage++
+			c.Niveau++
 			break
 		}
 
 		fmt.Println("\n--- Tour du monstre ---")
 		GoblinPattern(&g, c, turn)
-
-		if c.CurrentHP <= 0 {
-			fmt.Println("\n☠️ Défaite... Tu as été vaincu par le monstre.")
-			break
-		}
 
 		turn++
 	}

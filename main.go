@@ -1,7 +1,7 @@
 package main
 
 import (
-	"Projet-Red/equipment"
+	"Projet-Red/character"
 	"Projet-Red/menu"
 	"Projet-Red/wallet"
 )
@@ -9,7 +9,7 @@ import (
 func main() {
 	myWallet := wallet.Wallet{GoldCoins: 100}
 
-	player := equipment.InitCharacter("Héros")
+	player := character.Init()
 
 	menu.StartMainMenu(&myWallet, &player)
 }
